@@ -3,23 +3,23 @@ package pennapps.project;
 import android.os.AsyncTask;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 /**
  * Created by Michael on 2/15/2014.
  */
-public class Network extends AsyncTask<String, Void, Void> {
+public class Network extends AsyncTask<MouseEvent, Void, Void> {
 
     private Socket socket;
-    private PrintWriter printWriter;
+    private ObjectOutputStream objOutput;
     @Override
-    protected Void doInBackground(String... url) {
+    protected Void doInBackground(MouseEvent... event) {
         try {
-            socket = new Socket("158.130.165.210", 14444);
-            printWriter = new PrintWriter(socket.getOutputStream(), true);
-            printWriter.write("SUCK MY DICK");
-            printWriter.flush();
-            printWriter.close();
+            socket = new Socket("158.130.161.251", 14445);
+            objOutput = new ObjectOutputStream(socket.getOutputStream());
+            objOutput.writeObject(event[0]);
+            objOutput.flush();
+            objOutput.close();
             socket.close();
         } catch (IOException e) {
             e.printStackTrace();

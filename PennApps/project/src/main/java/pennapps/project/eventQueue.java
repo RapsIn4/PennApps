@@ -19,7 +19,10 @@ public class eventQueue {
      * Pass the next event to the server to process
      */
     void PassNextEvent() {
-        // package event and send to server to process
+        // grab next event
+        Event next = eventQueue.remove(0);
+
+        // send to server
 
     }
 

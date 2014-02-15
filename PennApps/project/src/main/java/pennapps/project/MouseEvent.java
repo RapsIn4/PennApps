@@ -1,23 +1,30 @@
 package pennapps.project;
 
-import android.graphics.Point;
+import java.io.Serializable;
 
 /**
  * Created by Michael on 2/14/2014.
  */
-public class MouseEvent implements Event {
-    enum EventType { MOUSEDOWN, MOUSEUP, MOUSEMOVE }
-    Point point; /* only set for mouse type
-                    position of the cursor */
-    EventType type;
+public class MouseEvent implements Serializable {
+    static final long serialVersionUID = 1L;
+    private int type;
 
-    MouseEvent ( EventType type, Point point ) {
+    private Point point; /* only set for mouse type
+                    position of the cursor */
+    public MouseEvent() {
+        this.type = 1;
+        this.point = new Point(0, 0);
+    }
+    MouseEvent ( int type, Point point ) {
         this.type = type;
         this.point = point;
     }
 
-    EventType GetType() {
+    int GetType() {
         return this.type;
     }
 
+    Point GetPoint() {
+        return point;
+    }
 }

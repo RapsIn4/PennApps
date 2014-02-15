@@ -1,9 +1,11 @@
 package pennapps.project;
 
+import java.io.Serializable;
+
 /**
  * Created by Michael on 2/14/2014.
  */
-public class KeyEvent implements Event {
+public class KeyEvent implements Serializable {
     enum EventType { KEYPRESS, KEYRELEASE }
 
     EventType type;

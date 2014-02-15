@@ -45,10 +45,11 @@ public class MainActivity extends Activity implements View.OnClickListener {
         switch ( v.getId() ) {
             case R.id.btn1:
                 Log.i("MainActivity", "btn1");
-                new Network().execute("");
+                new Network().execute(new MouseEvent(1, new Point(0, 0)));
                 break;
             case R.id.btn2:
                 Log.i("MainActivity", "btn2");
+
                 break;
         }
     }
