@@ -22,5 +22,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/btn1"/>
+    <Button
+        android:text="startLayout"
+        android:id="@+id/startLayout"
+        android:onClick="onClick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/btn2"/>
 
 </RelativeLayout>

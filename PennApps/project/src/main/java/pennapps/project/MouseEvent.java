@@ -5,12 +5,11 @@ import java.io.Serializable;
 /**
  * Created by Michael on 2/14/2014.
  */
-public class MouseEvent implements Serializable {
+public class MouseEvent extends Event {
     static final long serialVersionUID = 1L;
     private int type;
-    
-    private Point point; /* only set for mouse type
-                    position of the cursor */
+    private Point point;
+
     public MouseEvent() {
         this.type = 1;
         this.point = new Point(0, 0);
@@ -19,6 +18,10 @@ public class MouseEvent implements Serializable {
     public MouseEvent ( int type, Point point ) {
         this.type = type;
         this.point = point;
+    }
+
+    char GetKey() {
+        return 0;
     }
 
     int GetType() {

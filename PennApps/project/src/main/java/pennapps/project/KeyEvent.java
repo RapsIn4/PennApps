@@ -5,26 +5,25 @@ import java.io.Serializable;
 /**
  * Created by Michael on 2/14/2014.
  */
-public class KeyEvent implements Serializable {
-    enum EventType { KEYPRESS, KEYRELEASE }
+public class KeyEvent extends Event {
+    static final long serialVersionUID = 1L;
+    private int type;
+    private char key; // only set if type is key
 
-    EventType type;
-    char key; // only set if type is key
-
-    KeyEvent ( char c, EventType type ) {
+    KeyEvent ( int type, char c ) {
         this.key = c;
         this.type = type;
     }
 
-    void SetKey( char c ) {
+    public void SetKey( char c ) {
         this.key = c;
     }
 
-    char GetKey() {
+    public char GetKey() {
         return this.key;
     }
 
-    EventType GetType () {
+    public int GetType () {
         return this.type;
     }
 
