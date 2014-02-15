@@ -4,14 +4,24 @@ import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
+import android.widget.Button;
 
-public class MainActivity extends Activity {
+import java.io.PrintWriter;
+import java.net.Socket;
+import java.io.IOException;
+
+public class MainActivity extends Activity implements View.OnClickListener {
+
+    private Button btn1, btn2;
+    private PrintWriter printWriter;
+    private Socket socket;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,8 +34,23 @@ public class MainActivity extends Activity {
                     .commit();
         }
 
+        btn1 = (Button)findViewById(R.id.btn1);
+        btn2 = (Button)findViewById(R.id.btn1);
+
+    }
 
 
+    @Override
+    public void onClick(View v) {
+        switch ( v.getId() ) {
+            case R.id.btn1:
+                Log.i("MainActivity", "btn1");
+                new Network().execute("");
+                break;
+            case R.id.btn2:
+                Log.i("MainActivity", "btn2");
+                break;
+        }
     }
 
 
