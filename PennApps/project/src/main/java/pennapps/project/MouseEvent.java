@@ -12,6 +12,7 @@ public class MouseEvent implements Event {
     EventType type;
 
     MouseEvent ( EventType type, Point point ) {
+
         this.type = type;
         this.point = point;
     }
