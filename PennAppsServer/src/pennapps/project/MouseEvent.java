@@ -1,14 +1,13 @@
 package pennapps.project;
 
 
-import java.io.Serializable;
-
 
 /**
  * Created by Michael on 2/14/2014.
  */
-public class MouseEvent implements Serializable{
+public class MouseEvent extends Event {
     static final long serialVersionUID = 1L;
+    enum EventType { MOUSEDOWN, MOUSEUP, MOUSEMOVE}; 
     private int type;
     private Point point; /* only set for mouse type
                     position of the cursor */
@@ -21,12 +20,15 @@ public class MouseEvent implements Serializable{
         this.type = type;
         this.point = point;
     }
-
-    int GetType() {
+    public int GetKey() {
+        return 0;
+    }
+    
+    public int GetType() {
         return this.type;
     }
     
-    Point GetPoint() {
+    public Point GetPoint() {
         return point;
     }
 
