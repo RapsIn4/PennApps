@@ -20,7 +20,7 @@ public class MouseEvent extends Event {
         this.point = point;
     }
 
-    char GetKey() {
+    int GetKey() {
         return 0;
     }
 

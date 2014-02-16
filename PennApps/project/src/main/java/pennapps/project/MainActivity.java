@@ -3,6 +3,8 @@ package pennapps.project;
 import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
+import android.graphics.Color;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,46 +16,108 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
 import android.widget.Button;
-
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.io.IOException;
+import java.util.ArrayList;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements ActionBar.OnNavigationListener {
 
-    private Button btn1, btn2;
+    private RelativeLayout layout;
+    private KeyButton up, down, left, right;
     private PrintWriter printWriter;
     private Socket socket;
+
+    // action bar
+    private ActionBar actionBar;
+
+    // Title navigation Spinner data
+    private ArrayList<SpinnerNavItem> navSpinner;
+
+    // Navigation adapter
+    private TitleNavigationAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        //setContentView(R.layout.activity_main);
 
-        if (savedInstanceState == null) {
-            getFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
-                    .commit();
-        }
+//        if (savedInstanceState == null) {
+//            getFragmentManager().beginTransaction()
+//                    .add(R.id.container, new PlaceholderFragment())
+//                    .commit();
+//        }
+        actionBar = getActionBar();
 
-        btn1 = (Button)findViewById(R.id.btn1);
-        btn2 = (Button)findViewById(R.id.btn2);
+        // Hide the action bar title
+        actionBar.setDisplayShowTitleEnabled(false);
 
+        // Enabling Spinner dropdown navigation
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+
+        // Spinner title navigation data
+        navSpinner = new ArrayList<SpinnerNavItem>();
+        navSpinner.add(new SpinnerNavItem("Local", R.drawable.ic_action_settings));
+        navSpinner.add(new SpinnerNavItem("My Places", R.drawable.ic_launcher));
+        navSpinner.add(new SpinnerNavItem("Checkins", R.drawable.ic_action_new));
+        navSpinner.add(new SpinnerNavItem("Latitude", R.drawable.ic_launcher));
+
+        // title drop down adapter
+        adapter = new TitleNavigationAdapter(getApplicationContext(), navSpinner);
+
+        // assigning the spinner navigation
+        actionBar.setListNavigationCallbacks(adapter, this);
+
+        layout = new RelativeLayout(getApplicationContext());
+        up = new KeyButton(getApplicationContext(), KeyEvent.VK_UP);
+        down = new KeyButton(getApplicationContext(), KeyEvent.VK_DOWN);
+        left = new KeyButton(getApplicationContext(), KeyEvent.VK_LEFT);
+        right = new KeyButton(getApplicationContext(), KeyEvent.VK_RIGHT);
+
+        RelativeLayout.LayoutParams r = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                                                                        ViewGroup.LayoutParams.MATCH_PARENT);
+        layout.setLayoutParams(r);
+
+        RelativeLayout.LayoutParams t = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                                                                        ViewGroup.LayoutParams.WRAP_CONTENT);
+        t.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+        t.addRule(RelativeLayout.RIGHT_OF, left.getId());
+        up.setLayoutParams(t);
+
+        RelativeLayout.LayoutParams q = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                                                                        ViewGroup.LayoutParams.WRAP_CONTENT);
+        q.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+        //q.addRule(RelativeLayout.LEFT_OF, down.getId());
+        q.addRule(RelativeLayout.BELOW, up.getId());
+        left.setLayoutParams(q);
+
+        RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                                                                        ViewGroup.LayoutParams.WRAP_CONTENT);
+        p.addRule(RelativeLayout.BELOW, up.getId());
+        p.addRule(RelativeLayout.RIGHT_OF, left.getId());
+        down.setLayoutParams(p);
+
+        RelativeLayout.LayoutParams s = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                                                                        ViewGroup.LayoutParams.WRAP_CONTENT);
+        s.addRule(RelativeLayout.RIGHT_OF, down.getId());
+        s.addRule(RelativeLayout.BELOW, up.getId());
+        right.setLayoutParams(s);
+
+        layout.addView(up);
+        layout.addView(right);
+        layout.addView(left);
+        layout.addView(down);
+
+        layout.setBackgroundColor(Color.BLUE);
+
+        layout.setVisibility(View.VISIBLE);
+        up.setVisibility(View.VISIBLE);
+        down.setVisibility(View.VISIBLE);
+        left.setVisibility(View.VISIBLE);
+        right.setVisibility(View.VISIBLE);
+
+        setContentView(layout);
     }
-
-    public void onClick(View v) {
-        switch ( v.getId() ) {
-            case R.id.btn1:
-                Log.i("MainActivity", "btn1");
-                new Network().execute(new MouseEvent(1, new Point(0, 0)));
-                break;
-            case R.id.btn2:
-                Log.i("MainActivity", "btn2");
-                new Network().execute(new KeyEvent(1, 'z'));
-                break;
-        }
-    }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -84,19 +148,12 @@ public class MainActivity extends Activity {
     }
 
     /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            return rootView;
-        }
+     * Actionbar navigation item select listener
+     * */
+    @Override
+    public boolean onNavigationItemSelected(int itemPosition, long itemId) {
+        // Action to be taken after selecting a spinner item
+        return false;
     }
 
 }
