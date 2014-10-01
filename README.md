@@ -1,4 +1,4 @@
 PennApps
 ========
 
-Our PennApps Hack
+Our PennApps Hack - In the works
